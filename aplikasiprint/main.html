@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Kopi KDS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body { 
+      margin:0; 
+      font-family: 'Cormorant Garamond', serif; 
+      background:#f8f9fa; 
+    }
+    
+    /* Container utama */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header toko */
+    .header {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #5a3921;
+    }
+    
+     .header h1 {
+      font-family: 'Playfair Display', serif;
+      color: #5a3921;
+      margin: 0;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* Grid menu kopi - diubah untuk maksimal 5 card */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      justify-content: center;
+      padding-bottom: 20px; /* Tambahan padding untuk border bottom */
+      border-bottom: 2px solid #5a3921; /* Garis bawah seperti di header */
+      margin-bottom: 20px; /* Jarak setelah border */
+    }
+    
+    /* Media query untuk layar lebar - membatasi maksimal 5 card */
+    @media (min-width: 1100px) {
+      .menu-grid {
+        grid-template-columns: repeat(5, minmax(180px, 1fr));
+      }
+    }
+    
+    /* Kartu item menu */
+    .menu-item {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    
+    .menu-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .menu-item img { 
+      width: 100%; 
+      height: 190px;
+      object-fit: cover; 
+    }
+    
+    .menu-item .info { 
+      padding: 12px; 
+      text-align: center;
+    }
+    
+    .menu-item .name { 
+      font-size: 17px; 
+      font-family: 'Playfair Display', serif;
+      font-weight: 600; 
+      margin: 0 0 4px; 
+      color: #3e2a1f;
+      letter-spacing: 0.5px;
+    }
+    
+    .menu-item .price { 
+      font-size: 15px; 
+      font-family: 'Cormorant Garamond', serif;
+      color: #a9745b;   /* coklat muda elegan */
+      font-weight: 400; /* tipis */
+      margin: 0;
+    }
+
+    
+
+    /* Area cetak (tersembunyi) */
+    #print-area { 
+      display: none; 
+    }
+    
+    /* Style untuk cetakan */
+    @media print {
+      body * {
+        display: none;
+      }
+      
+      #print-area, #print-area * {
+        display: block;
+      }
+      
+      @page {
+        size: 58mm auto;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header Toko -->
+    <div class="header">
+      <!-- <h1>KDS's Caffe</h1> -->
+    </div>
+
+    <!-- Grid Menu Kopi -->
+    <div class="menu-grid" id="menu"></div>
+  </div>
+
+  <!-- Area Cetak (Tersembunyi) -->
+  <div id="print-area"></div>
+
+  <script>
+    // Data menu kopi yang diperluas
+    const menuData = [
+      { 
+        name: "Kopi Latte", 
+        price: 28000, 
+        img: "img/late.jpg" 
+      },
+      { 
+        name: "Cappuccino", 
+        price: 30000, 
+        img: "img/cappucino.jpg" 
+      },
+      { 
+        name: "Espresso", 
+        price: 22000, 
+        img: "img/espreso.jpg" 
+      },
+      { 
+        name: "Americano", 
+        price: 25000, 
+        img: "img/americano.jpg" 
+      },
+      { 
+        name: "Mochaccino", 
+        price: 32000, 
+        img: "img/mochaccino.jpg" 
+      },
+      { 
+        name: "Macchiato", 
+        price: 27000, 
+        img: "img/macchiato.jpg" 
+      },
+      { 
+        name: "Kopi Tubruk", 
+        price: 15000, 
+        img: "img/tubruk.jpg" 
+      },
+      { 
+        name: "Kopi Susu Gula Aren", 
+        price: 20000, 
+        img: "img/gulaaren.jpg" 
+      },
+      { 
+        name: "Hazelnut Coffee", 
+        price: 35000, 
+        img: "img/hazelnut.jpg" 
+      },
+      { 
+        name: "Affogato", 
+        price: 38000, 
+        img: "img/Affogato.jpg" 
+      },
+      { 
+        name: "Flat White", 
+        price: 29000, 
+        img: "img/white.jpg" 
+      },
+      { 
+        name: "Kopi Jahe", 
+        price: 18000, 
+        img: "img/kopijahe.jpg" 
+      },
+      { 
+        name: "Kopi Tarik", 
+        price: 23000, 
+        img: "img/kopitarik.jpg" 
+      },
+      {   
+        name: "Kopi Aceh Gayo", 
+        price: 40000, 
+        img: "img/aceh.jpg" 
+      },
+      { 
+        name: "Cold Brew", 
+        price: 32000, 
+        img: "img/cold.jpg" 
+      },
+    ];
+
+    const menuEl = document.getElementById("menu");
+    const printArea = document.getElementById("print-area");
+
+    // Render menu kopi
+    menuData.forEach(item => {
+      const menuItem = document.createElement("div");
+      menuItem.className = "menu-item";
+      menuItem.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" onerror="this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22180%22 height%3D%22160%22 viewBox%3D%220 0 180 160%22%3E%3Crect fill%3D%22%23ddd%22 width%3D%22180%22 height%3D%22160%22%2F%3E%3Ctext fill%3D%22%23666%22 font-family%3D%22Arial%22 font-size%3D%2216%22 text-anchor%3D%22middle%22 x%3D%2290%22 y%3D%2285%22%3EGambar Kopi%3C%2Ftext%3E%3C%2Fsvg%3E'">
+        <div class="info">
+          <p class="name">${item.name}</p>
+          <p class="price">Rp ${item.price.toLocaleString('id-ID')}</p>
+        </div>
+      `;
+      menuItem.onclick = () => printItem(item);
+      menuEl.appendChild(menuItem);
+    });
+
+    // Fungsi untuk mencetak item tunggal
+    function printItem(item) {
+      const now = new Date();
+      const dateTimeString = now.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      let html = `
+        <div style="width:58mm; padding:5mm; font-family:monospace; font-size:14px;">
+          <div style="text-align:center; font-weight:bold; font-size:16px; margin-bottom:5px;">Katalog Kopi KDS</div>
+          <div style="text-align:center; font-size:11px; margin-bottom:10px;">${dateTimeString}</div>
+          <hr style="border:none; border-top:1px dashed #000; margin:8px 0;">
+          <div style="display:flex; justify-content:space-between; margin:8px 0;">
+            <span>${item.name}</span>
+            <span>Rp ${item.price.toLocaleString('id-ID')}</span>
+          </div>
+          <hr style="border:none; border-top:1px dashed #000; margin:8px 0;">
+          <div style="text-align:center; font-size:13px;">Terima Kasih</div>
+          <div style="text-align:center; font-size:11px; margin-top:5px;">Selamat Menikmati</div>
+        </div>
+      `;
+      
+      printArea.innerHTML = html;
+      window.print();
+    }
+  </script>
+</body>
+</html>
